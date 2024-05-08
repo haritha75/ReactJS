@@ -1,0 +1,9 @@
+Lifting state up in React refers to the practice of moving the state from a child component to its parent component to share stateful data between components.
+
+Derived state in React refers to state values that are computed based on other state or props values. 
+It's essentially state that is derived or calculated from existing data rather than being directly set by user input or external events.
+
+
+
+
+
