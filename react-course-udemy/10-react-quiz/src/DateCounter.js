@@ -2,20 +2,30 @@ import { useReducer } from "react";
 
 // useReducer hook is a advance function of managing state instread of useState hook.
 
+// useing reducer  functions all the possible state updates we can update in one function. no need to use different components.
 function reducer(state, action) {
   // it will take current state and perform action
   console.log(state, action);
   // it print 0,1 because current state is 0 and action(means we are setting dispatch) is 1 so curstate+action it print next state
   // return state + action;
 
-  if (action.type === "inc") return state + 1;
-  if (action.type === "dec") return state - 1;
-  if (action.type === "setCount") return action.payload;
+  switch (action.type) {
+    case "inc":
+      return { ...state, count: state.count + state.step };
+    case "dec":
+      return { ...state, count: state.count - state.step };
+    case "setCount":
+      return { ...state, count: action.payload };
+    case "setStep":
+      return { ...state, step: action.payload };
+    case "reset":
+      // return initialState; // we can use like this as well
+      return { count: 0, step: 1 }; //here we are reseting at the same by using useReducer hook in normally we cannot do like this
+    default:
+      throw new Error(" Unknown action");
+  }
 }
 function DateCounter() {
-  // const [count, setCount] = useState(0);
-  // const [step, setStep] = useState(1);
-
   // to update state use dispatch
   const initialState = { count: 0, step: 1 };
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -27,28 +37,22 @@ function DateCounter() {
 
   const dec = function () {
     dispatch({ type: "dec" }); //this will be going to the action into reducer function
-    // setCount((count) => count - 1);
-    // setCount((count) => count - step);
   };
 
   const inc = function () {
     dispatch({ type: "inc" }); //this will be going to the action into reducer function
-    // setCount((count) => count + 1);
-    // setCount((count) => count + step);
   };
 
   const defineCount = function (e) {
     dispatch({ type: "setCount", payload: Number(e.target.value) });
-    // setCount(Number(e.target.value));
   };
 
   const defineStep = function (e) {
-    // setStep(Number(e.target.value));
+    dispatch({ type: "setStep", payload: Number(e.target.value) });
   };
 
   const reset = function () {
-    // setCount(0);
-    // setStep(1);
+    dispatch({ type: "reset" });
   };
 
   return (
