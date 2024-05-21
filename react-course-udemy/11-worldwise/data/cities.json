@@ -47,6 +47,30 @@
         "lng": "-2.13128394200588"
       },
       "id": 98443198
+    },
+    {
+      "cityName": "Dharmavaram",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2024-05-20T10:03:16.832Z",
+      "notes": "Dharmavaram sarees are famous for their exquisite designs, vibrant colors, and fine quality silk. ",
+      "position": {
+        "lat": "14.413400165206104",
+        "lng": "77.71865844726564"
+      },
+      "id": 98443202
+    },
+    {
+      "cityName": "Mertola",
+      "country": "Portugal",
+      "emoji": "🇵🇹",
+      "date": "2024-05-21T10:42:18.689Z",
+      "notes": "...",
+      "position": {
+        "lat": "37.59682400108367",
+        "lng": "-7.536621093750001"
+      },
+      "id": 98443203
     }
   ]
 }
