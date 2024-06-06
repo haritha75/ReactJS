@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { useCreateCabin } from "./useCreateCabin.js";
 import { useEditCabin } from "./useEditCabin.js";
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { isCreating, createCabin } = useCreateCabin();
   const { isEditing, editCabin } = useEditCabin();
 
@@ -37,6 +37,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           onSuccess: (data) => {
             console.log(data);
             reset();
+            onCloseModal?.();
           },
         }
       );
@@ -47,6 +48,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           onSuccess: (data) => {
             console.log(data);
             reset();
+            onCloseModal?.();
           },
         }
       );
@@ -56,7 +58,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     console.log(errors);
   }
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -140,7 +145,11 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isWorking}>
@@ -153,6 +162,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
 CreateCabinForm.propTypes = {
   cabinToEdit: PropTypes.object, // or a more specific shape if you know the structure of the object
+  onCloseModal: PropTypes.func.isRequired,
 };
 
 export default CreateCabinForm;

@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import CreateCabinForm from "./CreateCabinForm";
+// import formatCurrency from "../../utils/helpers";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useCreateCabin } from "./useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
-import Menus from "../../ui/Menus";
-import { formatCurrency } from "../../utils/helpers";
 
 // const TableRow = styled.div`
 //   display: grid;
@@ -49,10 +48,15 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
+{
+  /* <Price>{formatCurrency(regularPrice)}</Price>
+<Discount>{formatCurrency(discount)}</Discount> */
+}
+
 export default function CabinRow({ cabin }) {
   const { isDeleting, deleteCabin } = useDeleteCabin();
-  const { createCabin } = useCreateCabin();
-  // isCreating,
+  const { isCreating, createCabin } = useCreateCabin();
+
   const {
     id: cabinId,
     image,
@@ -79,44 +83,37 @@ export default function CabinRow({ cabin }) {
       <Img src={image} alt={name} />
       <Cabin>{name}</Cabin>
       <div>Fits up to {maxCapacity} guests</div>
-      <Price>{formatCurrency(regularPrice)}</Price>
-      {discount ? (
-        <Discount>{formatCurrency(discount)}</Discount>
-      ) : (
-        <span>&mdash;</span>
-      )}
+      <Price>{regularPrice}</Price>
+      {discount ? <Discount>{discount}</Discount> : <span>&mdash;</span>}
       <div>
+        <button disabled={isCreating} onClick={handleDuplicate}>
+          <HiSquare2Stack />
+        </button>
+
         <Modal>
-          <Menus.Menu>
-            <Menus.Toggle id={cabinId} />
+          <Modal.Open opens="edit">
+            <button>
+              <HiPencil />
+            </button>
+          </Modal.Open>
 
-            <Menus.List id={cabinId}>
-              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
-                Duplicate
-              </Menus.Button>
+          <Modal.Window name="edit">
+            <CreateCabinForm cabinToEdit={cabin} />
+          </Modal.Window>
+          {/* this mutate function calling mutationFn function */}
 
-              <Modal.Open opens="edit">
-                <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
-              </Modal.Open>
-
-              <Modal.Open opens="delete">
-                <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
-              </Modal.Open>
-            </Menus.List>
-
-            <Modal.Window name="edit">
-              <CreateCabinForm cabinToEdit={cabin} />
-            </Modal.Window>
-            {/* this mutate function calling mutationFn function */}
-
-            <Modal.Window name="delete">
-              <ConfirmDelete
-                resourceName="cabins"
-                disabled={isDeleting}
-                onConfirm={() => deleteCabin(cabinId)}
-              />
-            </Modal.Window>
-          </Menus.Menu>
+          <Modal.Open opens="delete">
+            <button>
+              <HiTrash />
+            </button>
+          </Modal.Open>
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              resourceName="cabins"
+              disabled={isDeleting}
+              onConfirm={() => deleteCabin(cabinId)}
+            />
+          </Modal.Window>
         </Modal>
       </div>
     </Table.Row>
