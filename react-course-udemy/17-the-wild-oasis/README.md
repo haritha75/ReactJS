@@ -1,8 +1,3 @@
-# React + Vite
+# The Wild Oasis
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The Wild Oasis is a React-based hotel management application designed to streamline the management of hotel operations, including user management, cabins, bookings, settings, and a dashboard. Built with Vite for fast development and hot module replacement (HMR), this application aims to provide a seamless experience for hotel administrators and staff.
